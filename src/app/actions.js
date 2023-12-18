@@ -10,25 +10,57 @@ cloudinary.config({
 export async function uploadFile(formData) {
     const file = formData.get('file')
 
-    const buffer = await file.arrayBuffer()
-    const bytes = new Uint8Array(buffer)
+    const fileBuffer = await file.arrayBuffer();
 
-    try {
-        const uploadResult = await new Promise((resolve,reject) => {
-            cloudinary.uploader
-                .upload_stream((error, result) => {
-                    if (error) return reject(error)
-                    else return resolve(result)
-                })
-                .end(bytes);
-        })
+    let mime = file.type; 
+    let encoding = 'base64'; 
+    let base64Data = Buffer.from(fileBuffer).toString('base64');
+    let fileUri = 'data:' + mime + ';' + encoding + ',' + base64Data;
 
-        const result = await cloudinary.uploader
-            .rename(uploadResult.public_id, file.name, { overwrite: true })
+  try {
+    
+    const uploadToCloudinary = () => {
+      return new Promise((resolve, reject) => {
 
-        return { type: 'success', message: 'Archivo subido' }
+          let result = cloudinary.uploader.upload(fileUri, {
+            invalidate: true
+          })
+            .then((result) => {
+              console.log(result);
+              resolve(result);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+      });
+    };
+
+    const result = await uploadToCloudinary();
+    
+    let imageUrl = result.secure_url;
+
+    return { type: 'success', message: 'Archivo subido' }
  
-    } catch (error) {
-        return { type: 'error', message: error.message }
-    }
+  } catch (error) {
+    return { type: 'error', message: error.message }
+  }
 }
+
+
+//     return NextResponse.json(
+//       { success: true, imageUrl: imageUrl },
+//       { status: 200 }
+//     );
+//   } catch (error) {
+//     console.log("server err", error);
+//     return NextResponse.json({ err: "Internal Server Error" }, { status: 500 });
+//   }
+// };
+
+//         return { type: 'success', message: 'Archivo subido' }
+ 
+//     } catch (error) {
+//         return { type: 'error', message: error.message }
+//     }
+// }
