@@ -23,7 +23,7 @@ export async function uploadFile(formData) {
       return new Promise((resolve, reject) => {
 
           let result = cloudinary.uploader.upload(fileUri, {
-            invalidate: true
+            invalidate: true, public_id: file.name
           })
             .then((result) => {
               console.log(result);

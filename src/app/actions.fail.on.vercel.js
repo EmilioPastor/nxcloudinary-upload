@@ -1,4 +1,9 @@
 'use server'
+/*
+Este código funciona en localhost, pero no en Vercel
+Referencia: https://community.cloudinary.com/discussion/432/image-upload-from-api-route-on-cloudinary-works-on-localhost-but-not-on-vercel-production
+*/
+
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
