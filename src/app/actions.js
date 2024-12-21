@@ -50,16 +50,6 @@ export async function uploadFile(formData) {
 }
 
 
-//     return NextResponse.json(
-//       { success: true, imageUrl: imageUrl },
-//       { status: 200 }
-//     );
-//   } catch (error) {
-//     console.log("server err", error);
-//     return NextResponse.json({ err: "Internal Server Error" }, { status: 500 });
-//   }
-// };
-
 //         return { type: 'success', message: 'Archivo subido' }
  
 //     } catch (error) {
