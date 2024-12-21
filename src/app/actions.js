@@ -25,7 +25,7 @@ export async function uploadFile(formData) {
           let result = cloudinary.uploader.upload(fileUri, {
             // a partir de Junio 2024 cloudinary usa dynamic folders
             // en este caso es recomendable usar propiedad asset_folder
-            invalidate: true, public_id: file.name, asset_folder: 'samples/animals'
+            invalidate: true, public_id: file.name, asset_folder: 'samples/landscapes'
           })
             .then((result) => {
               console.log(result);
