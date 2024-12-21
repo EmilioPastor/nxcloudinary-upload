@@ -50,9 +50,3 @@ export async function uploadFile(formData) {
 }
 
 
-//         return { type: 'success', message: 'Archivo subido' }
- 
-//     } catch (error) {
-//         return { type: 'error', message: error.message }
-//     }
-// }
