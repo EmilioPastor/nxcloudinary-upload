@@ -1,21 +1,26 @@
 'use client'
+import { useActionState, useEffect } from "react";
 import { uploadFile } from "@/app/actions";
-import { toast } from 'react-hot-toast';
-import { SubmitButton } from "@/app/SubmitButton";
+import { toast } from 'sonner';
 
 
-const UploadForm = () => {
 
-  async function wrapper(data) {
-    const {type, message} = await uploadFile(data)
-    if (type == 'success') toast.success(message)
-    if (type == 'error') toast.error(message)
-  }
+function UploadForm() {
+
+  const [state, action, pending] = useActionState(uploadFile, null)
+
+  useEffect(() => {
+    if (state?.success) toast.success(state.success)
+    if (state?.error) toast.error(state.error)
+  }, [state])
 
   return (
-    <form action={wrapper}>
+    <form action={action}>
       <input type="file" name="file" required accept="image/*" />
-      <SubmitButton />
+
+      <button type="submit" disabled={pending}>
+        {pending ? 'Subiendo archivo...' : "Subir archivo"}
+      </button>
     </form>
   );
 };

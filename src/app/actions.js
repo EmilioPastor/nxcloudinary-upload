@@ -11,7 +11,7 @@ cloudinary.config({
 
 
 
-export async function uploadFile(formData) {
+export async function uploadFile(prevState, formData) {
   const file = formData.get('file')
   const fileBuffer = await file.arrayBuffer();
 
@@ -39,9 +39,9 @@ export async function uploadFile(formData) {
     const result = await uploadToCloudinary();
     // let imageUrl = result.secure_url;
 
-    return { type: 'success', message: 'Archivo subido' }
+    return { success: 'Archivo subido' }
   } catch (error) {
-    return { type: 'error', message: error.message }
+    return { error: error.message }
   }
 }
 

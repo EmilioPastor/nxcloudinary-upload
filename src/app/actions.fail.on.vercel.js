@@ -12,14 +12,14 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-export async function uploadFile(formData) {
+export async function uploadFile(prevState, formData) {
     const file = formData.get('file')
 
     const buffer = await file.arrayBuffer()
     const bytes = new Uint8Array(buffer)
 
     try {
-        const uploadResult = await new Promise((resolve,reject) => {
+        const uploadResult = await new Promise((resolve, reject) => {
             cloudinary.uploader
                 .upload_stream((error, result) => {
                     if (error) return reject(error)
@@ -31,9 +31,9 @@ export async function uploadFile(formData) {
         const result = await cloudinary.uploader
             .rename(uploadResult.public_id, file.name, { overwrite: true })
 
-        return { type: 'success', message: 'Archivo subido' }
- 
+        return { success: 'Archivo subido' }
+
     } catch (error) {
-        return { type: 'error', message: error.message }
+        return { error: error.message }
     }
 }
