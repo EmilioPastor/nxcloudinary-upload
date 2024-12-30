@@ -1,6 +1,6 @@
 'use server'
 import { v2 as cloudinary } from 'cloudinary';
-
+import path from 'node:path'
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -27,7 +27,7 @@ export async function uploadFile(formData) {
       // en este caso es recomendable usar propiedad asset_folder
       let result = cloudinary.uploader.upload(
         fileUri,
-        { invalidate: true, public_id: file.name, asset_folder: 'pruebas/varios' }
+        { asset_folder: 'pruebas/varios', public_id: path.parse(file.name).name, invalidate: true }
       )
         .then((result) => resolve(result))
         .catch((error) => reject(error));
