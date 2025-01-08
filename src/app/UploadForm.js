@@ -7,11 +7,11 @@ import { toast } from 'sonner';
 
 function UploadForm() {
 
-  const [state, action, pending] = useActionState(uploadFile, null)
+  const [state, action, pending] = useActionState(uploadFile, {})
 
   useEffect(() => {
-    if (state?.success) toast.success(state.success)
-    if (state?.error) toast.error(state.error)
+    if (state.success) toast.success(state.success)
+    if (state.error) toast.error(state.error)
   }, [state])
 
   return (
