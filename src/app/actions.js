@@ -27,7 +27,7 @@ export async function uploadFile(prevState, formData) {
       // en este caso es recomendable usar propiedad asset_folder
       let result = cloudinary.uploader.upload(
         fileUri,
-        { asset_folder: 'pruebas/varios', public_id: path.parse(file.name).name, invalidate: true }
+        { asset_folder: 'galeria', public_id: path.parse(file.name).name, invalidate: true }
       )
         .then((result) => resolve(result))
         .catch((error) => reject(error));
